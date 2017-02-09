@@ -4,10 +4,10 @@ require 'spec_helper'
 
 require_relative '../movie_buff/01_queries.rb'
 
-describe 'it_was_ok' do 
+describe 'it_was_ok' do
   subject { it_was_ok.as_json }
 
-  it 'retrieves the correct information' do 
+  it 'retrieves the correct information' do
     expect(subject).to contain_exactly(
       {"id"=>537, "title"=>"Battlefield Earth", "score"=>2.3},
       {"id"=>738, "title"=>"Spice World", "score"=>3.0},
@@ -21,16 +21,16 @@ describe 'it_was_ok' do
       {"id"=>1833, "title"=>"Santa Claus Conquers the Martians", "score"=>2.1}
     )
   end
-    
+
   it "hits the database exactly once" do
     expect{ subject }.to make_database_queries(count: 1)
   end
 end
 
-describe 'harrison_ford' do 
+describe 'harrison_ford' do
   subject { harrison_ford.as_json }
 
-  it 'retrieves the correct information' do 
+  it 'retrieves the correct information' do
     expect(subject).to contain_exactly(
       {"id"=>5, "title"=>"Star Wars: Episode V - The Empire Strikes Back"},
       {"id"=>13, "title"=>"Star Wars: Episode VI - Return of the Jedi"},
@@ -40,33 +40,33 @@ describe 'harrison_ford' do
       {"id"=>700, "title"=>"Conversation, The"}
     )
   end
-    
+
   it "hits the database exactly once" do
     expect{ subject }.to make_database_queries(count: 1)
   end
 end
 
-describe 'biggest_cast' do 
+describe 'biggest_cast' do
   subject { biggest_cast.as_json }
 
-  it 'retrieves the correct information' do 
+  it 'retrieves the correct information' do
     expect(subject).to contain_exactly(
       {"id"=>373, "title"=>"Fear and Loathing in Las Vegas"},
       {"id"=>280, "title"=>"Star Trek: Generations"},
       {"id"=>1153, "title"=>"200 Cigarettes"}
     )
   end
-    
+
   it "hits the database exactly once" do
     expect{ subject }.to make_database_queries(count: 1)
   end
 end
 
-describe 'directed_by_one_of' do 
+describe 'directed_by_one_of' do
   them = ["George Lucas", "Steven Spielberg"]
   subject { directed_by_one_of(them).as_json }
 
-  it 'retrieves the correct information' do 
+  it 'retrieves the correct information' do
     expect(subject).to contain_exactly(
       {"id"=>7, "title"=>"Schindler's List"},
       {"id"=>8, "title"=>"Saving Private Ryan"},
@@ -87,7 +87,7 @@ describe 'directed_by_one_of' do
       {"id"=>1238, "title"=>"THX 1138"}
    )
   end
-    
+
   it "hits the database exactly once" do
     expect{ subject }.to make_database_queries(count: 1)
   end
