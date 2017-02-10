@@ -6,14 +6,14 @@ def eighties_b_movies
 end
 
 def bad_years
-  # List the years in which a movie with a rating above 7 was not released.
+  # List the years in which a movie with a rating above 8 was not released.
   # Movie.select(:yr).group(:yr)
   #   .having("COUNT(score > ?) = ?", 7, 0).to_sql
     # .pluck(:yr)
 
-  Movie.select(:yr, "COUNT(id) AS num_movies")
+  Movie.select(:yr)
     .group(:yr)
-    .having("score > ? AND num_movies = ?", 7, 0)
+    .having("MAX(score) < '8'")
     .pluck(:yr)
 
   # "SELECT \"movies\".\"yr\" FROM \"movies\" WHERE score <= 7 GROUP BY \"movies\".\"yr\" HAVING COUNT(id) = 0"
@@ -48,5 +48,10 @@ end
 def most_supportive
   # Find the two actors with the largest number of non-starring roles.
   # Show each actor's id, name and number of supporting roles.
-  
+  Actor.select(:id, :name, "COUNT(castings.ord) AS roles")
+    .joins(:castings)
+    .where("castings.ord != 1")
+    .group("actors.id")
+    .order("roles DESC")
+    .limit(2)
 end
